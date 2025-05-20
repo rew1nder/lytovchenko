@@ -1,0 +1,81 @@
+sequenceDiagram
+    participant User
+    participant App as TaskSorterApp
+    participant Form as TaskForm
+    participant List as TaskList
+    participant Strategy as ISortStrategy
+    participant Service as TaskService
+    participant Repo as TaskRepository
+    participant DB as MongoDB
+    
+    %% Application Initialization
+    User->>App: Open application
+    App->>Service: getAllTasks()
+    Service->>Repo: findAll()
+    Repo->>DB: Query tasks
+    DB-->>Repo: Return tasks data
+    Repo-->>Service: Return task objects
+    Service-->>App: Return tasks array
+    App->>List: Create TaskList
+    App->>Strategy: Create DateSortStrategy (default)
+    App->>List: setSortStrategy(DateSortStrategy)
+    App->>List: getSortedTasks()
+    List->>Strategy: sort(tasks)
+    Strategy-->>List: Return sorted tasks
+    List-->>App: Return sorted tasks
+    App-->>User: Display sorted tasks
+    
+    %% Adding a new task
+    User->>App: Click "Add Task"
+    App->>Form: Show task form
+    Form-->>User: Display task input form
+    User->>Form: Fill in task details
+    User->>Form: Submit form
+    Form->>Service: createTask(taskData)
+    Service->>Repo: create(task)
+    Repo->>DB: Insert task
+    DB-->>Repo: Confirm insertion
+    Repo-->>Service: Return created task
+    Service-->>App: Return new task
+    App->>List: addTask(newTask)
+    App->>List: getSortedTasks()
+    List->>Strategy: sort(tasks)
+    Strategy-->>List: Return sorted tasks
+    List-->>App: Return sorted tasks
+    App-->>User: Display updated task list
+    
+    %% Changing sort strategy
+    User->>App: Click "Sort by Priority"
+    App->>Strategy: Create PrioritySortStrategy
+    App->>List: setSortStrategy(PrioritySortStrategy)
+    App->>List: getSortedTasks()
+    List->>Strategy: sort(tasks)
+    Strategy-->>List: Return sorted tasks
+    List-->>App: Return sorted tasks
+    App-->>User: Display tasks sorted by priority
+    
+    %% Completing a task
+    User->>App: Click checkbox to complete task
+    App->>Service: markTaskComplete(taskId)
+    Service->>Repo: update(taskId, {completed: true})
+    Repo->>DB: Update task
+    DB-->>Repo: Confirm update
+    Repo-->>Service: Return updated task
+    Service-->>App: Return updated task
+    App->>List: updateTask(taskId, updatedTask)
+    App->>List: getSortedTasks()
+    List->>Strategy: sort(tasks)
+    Strategy-->>List: Return sorted tasks
+    List-->>App: Return sorted tasks
+    App-->>User: Display updated task list
+    
+    %% Filtering completed tasks
+    User->>App: Select "Show Completed"
+    App->>List: getCompletedTasks()
+    List-->>App: Return completed tasks
+    App->>List: setSortStrategy(currentStrategy)
+    App->>List: getSortedTasks()
+    List->>Strategy: sort(completedTasks)
+    Strategy-->>List: Return sorted tasks
+    List-->>App: Return sorted completed tasks
+    App-->>User: Display sorted completed tasks

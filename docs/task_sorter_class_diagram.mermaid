@@ -1,0 +1,118 @@
+classDiagram
+    %% Strategy Pattern Implementation
+    class ISortStrategy {
+        <<interface>>
+        +sort(tasks: Task[]): Task[]
+    }
+    
+    class DateSortStrategy {
+        +sort(tasks: Task[]): Task[]
+    }
+    
+    class PrioritySortStrategy {
+        +sort(tasks: Task[]): Task[]
+    }
+    
+    class AlphabeticalSortStrategy {
+        +sort(tasks: Task[]): Task[]
+    }
+    
+    ISortStrategy <|.. DateSortStrategy
+    ISortStrategy <|.. PrioritySortStrategy
+    ISortStrategy <|.. AlphabeticalSortStrategy
+    
+    %% Core Data Models
+    class Task {
+        +id: string
+        +title: string
+        +description: string
+        +dueDate: Date
+        +priority: Priority
+        +completed: boolean
+        +createdAt: Date
+        +updatedAt: Date
+        +toggleComplete(): void
+    }
+    
+    class Priority {
+        <<enumeration>>
+        LOW
+        MEDIUM
+        HIGH
+    }
+    
+    %% Context Class that uses the Strategy
+    class TaskList {
+        -tasks: Task[]
+        -sortStrategy: ISortStrategy
+        +constructor(sortStrategy: ISortStrategy)
+        +setSortStrategy(strategy: ISortStrategy): void
+        +addTask(task: Task): void
+        +removeTask(taskId: string): void
+        +updateTask(taskId: string, updatedTask: Task): void
+        +getSortedTasks(): Task[]
+        +getTaskById(id: string): Task
+        +getCompletedTasks(): Task[]
+        +getActiveTasks(): Task[]
+    }
+    
+    %% Service Classes
+    class TaskService {
+        -taskRepository: TaskRepository
+        +constructor(taskRepository: TaskRepository)
+        +getAllTasks(): Promise<Task[]>
+        +createTask(task: Task): Promise<Task>
+        +updateTask(id: string, task: Task): Promise<Task>
+        +deleteTask(id: string): Promise<void>
+        +markTaskComplete(id: string): Promise<Task>
+    }
+    
+    class TaskRepository {
+        +findAll(): Promise<Task[]>
+        +findById(id: string): Promise<Task>
+        +create(task: Task): Promise<Task>
+        +update(id: string, task: Task): Promise<Task>
+        +delete(id: string): Promise<void>
+    }
+    
+    %% Frontend Components
+    class TaskSorterApp {
+        -taskList: TaskList
+        -currentStrategy: ISortStrategy
+        +constructor()
+        +changeStrategy(strategy: ISortStrategy): void
+        +render(): JSX.Element
+    }
+    
+    class TaskForm {
+        -task: Task
+        -onSubmit: function
+        +handleSubmit(event): void
+        +render(): JSX.Element
+    }
+    
+    class TaskItem {
+        -task: Task
+        -onToggle: function
+        -onEdit: function
+        -onDelete: function
+        +handleToggle(): void
+        +render(): JSX.Element
+    }
+    
+    class SortControls {
+        -currentStrategy: string
+        -onStrategyChange: function
+        +handleStrategyChange(strategy: string): void
+        +render(): JSX.Element
+    }
+    
+    %% Relationships
+    TaskList o-- Task : contains
+    TaskList --> ISortStrategy : uses
+    Task --> Priority : has
+    TaskService --> TaskRepository : uses
+    TaskSorterApp o-- TaskList : manages
+    TaskSorterApp o-- TaskForm : contains
+    TaskSorterApp o-- TaskItem : contains
+    TaskSorterApp o-- SortControls : contains

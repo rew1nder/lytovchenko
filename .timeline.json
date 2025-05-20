@@ -1,10 +1,102 @@
 {
-  "timeline_index": 1,
-  "planner": {},
+  "timeline_index": 37,
+  "planner": {
+    "Team Leader": {
+      "1": {
+        "task_id": "1",
+        "dependent_task_ids": [],
+        "instruction": "Create a Product Requirements Document (PRD) for a web application demonstrating the Strategy design pattern. The application should be a simple task management system where users can prioritize tasks using different sorting strategies (by date, by priority, alphabetically).",
+        "task_type": "general",
+        "code": "",
+        "result": "",
+        "is_success": false,
+        "is_finished": true,
+        "assignee": "Emma",
+        "start_at": 1747740255.175839,
+        "end_at": 1747740349.4284706
+      },
+      "current_task_id": "3",
+      "2": {
+        "task_id": "2",
+        "dependent_task_ids": [
+          "1"
+        ],
+        "instruction": "Design the system architecture for the task management web application, focusing on how the Strategy pattern will be implemented. Include class diagrams and component interactions.",
+        "task_type": "general",
+        "code": "",
+        "result": "",
+        "is_success": false,
+        "is_finished": true,
+        "assignee": "Bob",
+        "start_at": 1747740349.428508,
+        "end_at": 1747740487.7706556
+      },
+      "3": {
+        "task_id": "3",
+        "dependent_task_ids": [
+          "2"
+        ],
+        "instruction": "Develop the task management web application with frontend and backend components, clearly implementing the Strategy design pattern for task sorting algorithms.",
+        "task_type": "general",
+        "code": "",
+        "result": "",
+        "is_success": false,
+        "is_finished": true,
+        "assignee": "Alex",
+        "start_at": 1747740487.7706892,
+        "end_at": 1747740824.4197638
+      }
+    }
+  },
   "gallery_last_file": {},
   "timeline_status": {
-    "1": 1
+    "1": 1,
+    "2": 1,
+    "3": 1,
+    "4": 1,
+    "5": 1,
+    "6": 1,
+    "7": 1,
+    "8": 1,
+    "9": 1,
+    "10": 1,
+    "11": 1,
+    "12": 1,
+    "13": 1,
+    "14": 1,
+    "15": 1,
+    "16": 1,
+    "17": 1,
+    "18": 1,
+    "20": 1,
+    "21": 1,
+    "22": 1,
+    "23": 1,
+    "24": 1,
+    "25": 1,
+    "26": 1,
+    "27": 1,
+    "28": 1,
+    "29": 1,
+    "30": 0,
+    "32": 1,
+    "33": 1,
+    "34": 1,
+    "35": 0,
+    "36": 1,
+    "37": 1
   },
-  "preview_servers": {},
+  "preview_servers": {
+    "13370af1-1ea0-41af-a437-d9512e8127ca": {
+      "role": "Alex",
+      "port": 5173,
+      "subdomain": "task-sorter-5gt9i-eqe09-8127ca",
+      "server": "7d78cf6c-a68f-4072-a063-a35e7fd6af74",
+      "cmd": "cd /data/chats/eqe09/workspace/react_template && pnpm run dev",
+      "timeline_index": 35,
+      "status": "success",
+      "logs": []
+    }
+  },
   "deploy": {}
 }
