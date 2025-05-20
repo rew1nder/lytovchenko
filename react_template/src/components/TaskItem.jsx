@@ -31,13 +31,19 @@ function TaskItem({ task, onToggle, onEdit, onDelete }) {
     >
       <div className="flex items-start justify-between">
         <div className="flex items-start flex-1">
-          <div className="mr-3 mt-1">
+          <div className="mr-3 mt-1 flex flex-col items-center">
             <input 
               type="checkbox" 
               checked={task.completed}
               onChange={() => onToggle(task.id)}
               className="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
             />
+            <button
+              onClick={() => onToggle(task.id)}
+              className={`text-xs px-2 py-1 mt-2 rounded ${task.completed ? 'bg-gray-300 hover:bg-gray-400' : 'bg-blue-500 hover:bg-blue-600 text-white'}`}
+            >
+              {task.completed ? 'Completed' : 'Complete'}
+            </button>
           </div>
           <div className="flex-1">
             <h3 
@@ -46,7 +52,7 @@ function TaskItem({ task, onToggle, onEdit, onDelete }) {
               {task.title}
             </h3>
             {task.description && (
-              <p className="mt-1 text-gray-600 text-sm">
+              <p className="mt-1 text-gray-600 text-sm whitespace-pre-wrap break-words max-h-24 overflow-y-auto">
                 {task.description}
               </p>
             )}

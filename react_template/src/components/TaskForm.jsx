@@ -80,9 +80,10 @@ function TaskForm({ task = null, onSubmit, onCancel }) {
             name="description"
             value={formData.description}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
-            rows="3"
-            placeholder="Task description"
+            className="w-full p-2 border border-gray-300 rounded resize-y"
+            rows="5"
+            placeholder="Task description (line breaks are supported)"
+            style={{ minHeight: '100px' }}
           ></textarea>
         </div>
         
